@@ -1,0 +1,69 @@
+@import "../../vars";
+
+.task-list {
+    &__empty {
+        padding: 40px;
+        text-align: center;
+        color: $grey;
+        font-weight: 300;
+        border-bottom: 1px solid $grey;
+    }
+}
+
+.task {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid $grey;
+  &__check-btn {
+    display: flex;
+    align-items: center;
+    border: 1px solid $grey;
+    border-radius: 50%;
+  }
+  &__save-btn {
+    color: $accent-color;
+  }
+  &__cancel-btn {
+    color: $secondary-color;
+  }
+  &__check {
+    fill: $accent-color;
+  }
+  &__text {
+    flex-grow: 1;
+    color: $white;
+  }
+  &__date {
+    color: $grey;
+    font-weight: 300;
+  }
+  &__edit {
+    fill: $white;
+  }
+  &__delete {
+    fill: $secondary-color;
+  }
+  &__edit-form {
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  &__edit-input {
+    flex-grow: 1;
+    color: $grey;
+  }
+  &__edit-input:focus {
+    color: $white;
+  }
+
+}
+.hidden {
+  opacity: 0;
+}
+.checked {
+    color: $grey;
+}

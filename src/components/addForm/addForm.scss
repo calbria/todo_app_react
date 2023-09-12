@@ -1,0 +1,29 @@
+@import '../../vars';
+.form {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    background-color: $bg-color;
+    border-radius: $radius;
+
+    &__btn {
+    display: flex;
+    border: 1px solid $grey;
+    border-radius: 50%;
+    }
+    &__plus {
+        fill: $white
+    }
+
+    &__input {
+        display: block;
+        flex-grow: 1;
+        color: $white;
+        
+    }
+    &__input::placeholder {
+        color: $grey;
+        font-weight: 300;
+    }
+    
+}

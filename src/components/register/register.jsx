@@ -1,20 +1,11 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import Field from "./field/field";
+import { NAME_REGEX, EMAL_REGEX, PWD_REGEX } from "../../constants/regEx";
+import { SIGNUP_URL } from "../../constants/url";
+import { NAME_HINT, EMAIL_HINT, PWD_HINT, MATCH_HINT } from "../../constants/messages";
 import "./register.scss";
 
-const NAME_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{2,}$/;
-const EMAL_REGEX = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
-const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{6,24}$/;
-const SIGNUP_URL = "http://212.24.111.61:3003/auth/signup";
-
-const NAME_HINT =
-  "At least 3 characters: start from small or capital letter, letters, numbers, dash, underscore are acceptable";
-const EMAIL_HINT =
-  "Start from one or more characters: small or capital letters, numbers, dot, dash, underscore, percent are acceptable. Must contain at symbol and dot symbol. At least 1 charactrer after at symbol. At least 2 characters after dot ";
-const PWD_HINT =
-  "At least 6 characters. Must contain at least one capital letter, one small leter, one number and one of following symbols: ! @ # $ %";
-const MATCH_HINT = "Must match the password you entered previously";
 
 export default function RegisterForm({ signinBtnHandler, signup }) {
   const [firstName, setFirstName] = useState("");
@@ -82,7 +73,7 @@ export default function RegisterForm({ signinBtnHandler, signup }) {
         } else if(response.status === 409) {
             setErrMessage("User with such email already exists");
         } else {
-            console.log("404: not found. Registration failed");
+            setErrMessage("404: not found. Registration failed");
         }
         const data = await response.json();
         console.log(data);
@@ -101,9 +92,6 @@ export default function RegisterForm({ signinBtnHandler, signup }) {
   return (
     <>
       <h2 className="login-form__header">Create Account</h2>
-
-      
-
       {
        success ? 
        <>

@@ -4,11 +4,13 @@ import { nanoid } from "nanoid";
 import AddForm from "./components/addForm/addForm";
 import TaskList from "./components/tasks/tasks";
 import Menu from "./components/menu/menu";
+import RegisterForm from "./components/register/register";
+import LoginForm from "./components/register/login";
 
 function App() {
-  const [fact, setFact] = useState('');
-  const [fetchError, setFetchError] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
+  const [isLogedin, setIsLogedin] = useState(false);
+  const [isSignedUp, setIsSignedUp] = useState(false)
 
   const [tasks, setTasks] = useState(
     () => JSON.parse(localStorage.getItem("tasks")) || []
@@ -59,39 +61,51 @@ function App() {
     setTasks(clearedTasks);
   }
 
-  useEffect(() => {
-    const fetcher = async () => {
-      try {
-        const response = await fetch("https://catfact.ninja/fact");
-        // if (!response) throw new Error('No data');
-        console.log(response)
-        const data = await response.json();
-        console.log(data);
-        setFact(data.fact)
-      } catch (err) {
-        console.log(err.message);
-        setFetchError(err.message);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    setTimeout( () => {
-      (async () => await fetcher())();
-    }, 2000)
-    
-    // fetcher does not return any value
-    // so we can just call it
-    // fetcher()
-    // fetch("https://catfact.ninja/fact")
-    //   .then((res) => res.json())
-    //   .then((data) => setFact(data.fact))
-    //   .catch(e => console.log(e));
-  }, []);
+  function signupBtnHandler() {
+    setIsSignedUp(true)
+  }
+  function signinBtnHandler() {
+    setIsSignedUp(false)
+  }
+
+  // useEffect(() => {
+  //   const fetcher = async () => {
+  //     try {
+  //       // const response = await fetch("http://212.24.111.61:3003/auth/token", {
+  //       //   method: "POST",
+  //       //   headers: {
+  //       //     "Content-Type": "application/json"
+  //       //   },
+  //       //   body: JSON.stringify({
+  //       //     username: "b@gmail.com",
+  //       //     password: "123",
+
+  //       //   })
+  //       // });
+  //       // const response = await fetch("http://212.24.111.61:3003/users", {
+  //       //   method: "GET",
+  //       //   headers: {
+  //       //     "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZjUxMDZlNy1kY2VhLTRkNWUtYWUzMy03MzRiNjEwMTI5NWUiLCJzdWIiOiJiQGdtYWlsLmNvbSIsImlhdCI6MTY5NTM5MzQyNC45MjMsImV4cCI6MTY5NTM5NzAyNC45MjMsInJvbGVzIjpbInVzZXIiXSwib3JpZ2luYWxfdWlkIjoiNWY1MTA2ZTctZGNlYS00ZDVlLWFlMzMtNzM0YjYxMDEyOTVlIn0.RAq0rU5flCzSTbk7raL8UZljU2HmIw0uYi9BOOYag9Q"
+  //       //   },
+
+  //       // });
+  //       // if (!response) throw new Error('No data');
+  //       // console.log(response);
+  //       const body = await response.json()
+  //       console.log(body);
+  //     } catch (err) {
+  //       console.log(err.message);
+  //     }
+  //   };
+
+  //   (async () => await fetcher())();
+  // }, []);
 
   useEffect(() => {
-    // document.addEventListener("click", () => console.log("click"));
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
+
+  // console.log(tasks);
 
   return (
     <div className="app">
@@ -100,28 +114,31 @@ function App() {
           <h1 className="app__title">MY TODO</h1>
         </header>
         <main className="app__main">
-          <AddForm addHandler={addHandler} />
-          <div className="app__list">
-            <TaskList
-              tasks={filteredTasks}
-              checkHandler={checkHandler}
-              deleteHandler={deleteHandler}
-              editHandler={editHandler}
-              activeItem={activeItem}
-            />
-            <div className="app__menu">
-              <Menu
+          {
+            isLogedin ?  <>
+            <AddForm addHandler={addHandler} />
+            <div className="app__list">
+              <TaskList
                 tasks={filteredTasks}
+                checkHandler={checkHandler}
+                deleteHandler={deleteHandler}
+                editHandler={editHandler}
                 activeItem={activeItem}
-                setActiveItem={setActiveItem}
-                clearHandler={clearHandler}
               />
+              <div className="app__menu">
+                <Menu
+                  tasks={filteredTasks}
+                  activeItem={activeItem}
+                  setActiveItem={setActiveItem}
+                  clearHandler={clearHandler}
+                />
+              </div>
             </div>
-          </div>
+            
+          </> : isSignedUp ? <RegisterForm signinBtnHandler={signinBtnHandler} signup={setIsLogedin}/> : <LoginForm signupBtnHandler={signupBtnHandler}/>
+          }
+         
         </main>
-        
-        {isLoading ? <p>Loading data...</p> : fetchError ? <p>{fetchError}</p> :  <p>Fun fact about cats: {fact}</p>}
-        
       </div>
     </div>
   );

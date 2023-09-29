@@ -47,3 +47,11 @@ select:-webkit-autofill:focus {
 //   -webkit-box-shadow: none;
   transition: background-color 5000s ease-in-out 0s;
 }
+
+.sign-btn {
+  color: $accent-color;
+}
+.sign-btn:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}

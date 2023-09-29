@@ -1,0 +1,25 @@
+@import '../../vars';
+.login-form {
+    flex-direction: column;
+    &__header {
+        color: $accent-color;
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+    &__field {
+        border-bottom: 1px solid $grey;
+    }
+    &__btn {
+        color:$accent-color
+    }
+    &__btn:disabled {
+        color: $grey;
+    }
+}
+
+.errorMsg {
+    color: $error-color;
+}
+.errorHide {
+    display: none;
+}

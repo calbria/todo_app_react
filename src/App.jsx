@@ -8,7 +8,7 @@ import RegisterForm from "./components/register/register";
 import LoginForm from "./components/register/login";
 
 function App() {
-  // const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [isLogedin, setIsLogedin] = useState(false);
   const [isSignedUp, setIsSignedUp] = useState(false)
 
@@ -68,7 +68,67 @@ function App() {
     setIsSignedUp(false)
   }
 
-  // useEffect(() => {
+  
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
+
+  // console.log(tasks);
+
+  return (
+    <div className="app">
+      <div className="container">
+        <header className="app__header">
+          <h1 className="app__title">MY TODO</h1>
+        </header>
+        <main className="app__main">
+          {
+            isLogedin ?  <>
+            {isLoading ? <p>Loading...</p> : <>
+            <AddForm addHandler={addHandler} />
+            <div className="app__list">
+              <TaskList
+                tasks={filteredTasks}
+                checkHandler={checkHandler}
+                deleteHandler={deleteHandler}
+                editHandler={editHandler}
+                activeItem={activeItem}
+              />
+              <div className="app__menu">
+                <Menu
+                  tasks={filteredTasks}
+                  activeItem={activeItem}
+                  setActiveItem={setActiveItem}
+                  clearHandler={clearHandler}
+                />
+              </div>
+            </div>
+            </>}
+           
+            
+          </> : isSignedUp ? <RegisterForm signinBtnHandler={signinBtnHandler} signup={setIsLogedin}/> : <LoginForm signupBtnHandler={signupBtnHandler} signin={setIsLogedin}/>
+          }
+         
+        </main>
+      </div>
+    </div>
+  );
+}
+
+export default App;
+
+// const initTask = [
+//   {
+//     id: 1,
+//     text: "my task 1",
+//     created: '25/10/22',
+//     isChecked: false,
+//   },
+
+// ];
+
+// useEffect(() => {
   //   const fetcher = async () => {
   //     try {
   //       // const response = await fetch("http://212.24.111.61:3003/auth/token", {
@@ -100,58 +160,3 @@ function App() {
 
   //   (async () => await fetcher())();
   // }, []);
-
-  useEffect(() => {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-  }, [tasks]);
-
-  // console.log(tasks);
-
-  return (
-    <div className="app">
-      <div className="container">
-        <header className="app__header">
-          <h1 className="app__title">MY TODO</h1>
-        </header>
-        <main className="app__main">
-          {
-            isLogedin ?  <>
-            <AddForm addHandler={addHandler} />
-            <div className="app__list">
-              <TaskList
-                tasks={filteredTasks}
-                checkHandler={checkHandler}
-                deleteHandler={deleteHandler}
-                editHandler={editHandler}
-                activeItem={activeItem}
-              />
-              <div className="app__menu">
-                <Menu
-                  tasks={filteredTasks}
-                  activeItem={activeItem}
-                  setActiveItem={setActiveItem}
-                  clearHandler={clearHandler}
-                />
-              </div>
-            </div>
-            
-          </> : isSignedUp ? <RegisterForm signinBtnHandler={signinBtnHandler} signup={setIsLogedin}/> : <LoginForm signupBtnHandler={signupBtnHandler}/>
-          }
-         
-        </main>
-      </div>
-    </div>
-  );
-}
-
-export default App;
-
-// const initTask = [
-//   {
-//     id: 1,
-//     text: "my task 1",
-//     created: '25/10/22',
-//     isChecked: false,
-//   },
-
-// ];

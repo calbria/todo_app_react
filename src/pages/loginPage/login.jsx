@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
-import Field from "./field/field";
+import Field from "../../components/loginField/field";
 import { EMAL_REGEX, PWD_REGEX } from "../../constants/regEx";
 import { EMAIL_HINT, PWD_HINT } from "../../constants/messages";
 import { SIGNIN_URL } from "../../constants/url";
@@ -44,25 +44,23 @@ export default function LoginForm({ signupBtnHandler, signin }) {
         }),
       });
       console.log(response);
-         setSuccess(true)
-          if (response.ok) {
-
-      signin(true);
-          } else if(response.status === 401) {
-              setErrMessage("User is not authorized");
-          } else {
-              setErrMessage("404: not found. Registration failed");
-          }
+      setSuccess(true);
+      if (response.ok) {
+        signin(true);
+      } else if (response.status === 401) {
+        setErrMessage("User is not authorized");
+      } else {
+        setErrMessage("404: not found. Registration failed");
+      }
       const data = await response.json();
       console.log(data);
-      
-      setEmail('');
-      setPwd('');
-     
+
+      setEmail("");
+      setPwd("");
     } catch (err) {
       console.log("ERROR", err.message);
-        setSuccess(false)
-        setErrMessage(err.message)
+      setSuccess(false);
+      setErrMessage(err.message);
     }
   }
 
@@ -72,7 +70,7 @@ export default function LoginForm({ signupBtnHandler, signin }) {
       <p>Please sign in to continue</p>
       {success ? (
         <>
-        <p className={errMessage ? 'errorMsg' : 'errorHide'}>{errMessage}</p>
+          <p className={errMessage ? "errorMsg" : "errorHide"}>{errMessage}</p>
           <form className="form login-form" onSubmit={submitHandler}>
             <Field
               type="email"

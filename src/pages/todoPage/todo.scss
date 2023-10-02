@@ -1,0 +1,11 @@
+@import '../../vars.scss';
+
+.todo {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    &__main {
+        background-color: $bg-color;
+        border-radius: $radius;
+    }
+}

@@ -1,9 +1,23 @@
 /* eslint-disable react/prop-types */
 import "./addForm.scss";
 import { useState } from "react";
+import { nanoid } from "nanoid";
 
-export default function AddForm({ addHandler }) {
+
+export default function AddForm({ tasks, setTasks }) {
   const [value, setValue] = useState("");
+
+  function addHandler(e, val) {
+    e.preventDefault();
+    const newTask = {
+      id: nanoid(),
+      text: val,
+      created: Date.now(),
+      isChecked: false,
+    };
+    console.log(newTask);
+    setTasks([...tasks, newTask]);
+  }
   
   return (
     <form

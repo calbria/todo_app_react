@@ -3,6 +3,8 @@ import './menu.scss';
 
 
 export default function Menu({tasks, activeItem, setActiveItem, clearHandler}) {
+
+    
    
     return (
         <div className='menu'>

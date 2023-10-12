@@ -6,7 +6,7 @@ import { EMAIL_HINT, PWD_HINT } from "../../constants/messages";
 import { SIGNIN_URL } from "../../constants/url";
 import "./register.scss";
 
-export default function LoginForm({ signupBtnHandler, signin }) {
+export default function LoginForm({ signupBtnHandler, signin, setAccessToken }) {
   const [email, setEmail] = useState("");
   const [validEmail, setValidEmail] = useState(false);
 
@@ -18,6 +18,7 @@ export default function LoginForm({ signupBtnHandler, signin }) {
 
   let disabled = validEmail && validPwd;
 
+  // Validation
   useEffect(() => {
     const result = EMAL_REGEX.test(email);
     setValidEmail(result);
@@ -28,11 +29,12 @@ export default function LoginForm({ signupBtnHandler, signin }) {
     setValidPwd(result);
   }, [pwd]);
 
+  // Submit
   async function submitHandler(e) {
     e.preventDefault();
     console.log("Sign in submit");
     try {
-      const response = await fetch(SIGNIN_URL, {
+      const response = await fetch("http://212.24.111.61:3003/auth/token", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -54,7 +56,9 @@ export default function LoginForm({ signupBtnHandler, signin }) {
               setErrMessage("404: not found. Registration failed");
           }
       const data = await response.json();
-      console.log(data);
+      console.log(data.accessToken);
+      setAccessToken(data.accessToken);
+      document.cookie = `user=${data.accessToken}`
       
       setEmail('');
       setPwd('');

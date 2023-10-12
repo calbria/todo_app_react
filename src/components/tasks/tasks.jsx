@@ -6,7 +6,7 @@ import { useState } from "react";
 function Task({ task, checkHandler, deleteHandler, editHandler }) {
   const [isEditing, setIsEditing] = useState(false);
   const [value, setValue] = useState(task.text);
-  const date = new Date(task.created);
+  const date = new Date(task.createdAt);
   const myDate = {
     date: date.getDate() < 10 ? `0${date.getDate()}` : date.getDate(),
     month: date.getMonth() < 10 ? `0${date.getMonth()}` : date.getMonth(),
@@ -22,7 +22,7 @@ function Task({ task, checkHandler, deleteHandler, editHandler }) {
             onClick={() => checkHandler(task)}
           >
             <svg
-              className={`task__check ${task.isChecked ? "" : "hidden"}`}
+              className={`task__check ${task.status === "done" ? "" : "hidden"}`}
               xmlns="http://www.w3.org/2000/svg"
               height="24"
               viewBox="0 -960 960 960"
@@ -67,7 +67,7 @@ function Task({ task, checkHandler, deleteHandler, editHandler }) {
             onClick={() => checkHandler(task)}
           >
             <svg
-              className={`task__check ${task.isChecked ? "" : "hidden"}`}
+              className={`task__check ${task.status ==="done" ? "" : "hidden"}`}
               xmlns="http://www.w3.org/2000/svg"
               height="24"
               viewBox="0 -960 960 960"
@@ -76,7 +76,7 @@ function Task({ task, checkHandler, deleteHandler, editHandler }) {
               <path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z" />
             </svg>
           </button>
-          <p className={`task__text ${task.isChecked ? "checked" : ""}`}>
+          <p className={`task__text ${task.status === "done" ? "checked" : ""}`}>
             {task.text}
           </p>
           <span className="task__date">{`${myDate.date}/${myDate.month}/${myDate.year}`}</span>
@@ -118,13 +118,7 @@ export default function TaskList({
   editHandler,
   activeItem,
 }) {
-  // const filteredTasks =
-  //   activeItem === "Active"
-  //     ? tasks.filter((item) => item.isChecked === false)
-  //     : activeItem === "Completed"
-  //     ? tasks.filter((item) => item.isChecked === true)
-  //     : tasks;
-
+ 
       const empty = activeItem === "Active"
       ? 'active'
       : activeItem === "Completed"

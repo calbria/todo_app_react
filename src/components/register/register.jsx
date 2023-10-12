@@ -7,7 +7,7 @@ import { NAME_HINT, EMAIL_HINT, PWD_HINT, MATCH_HINT } from "../../constants/mes
 import "./register.scss";
 
 
-export default function RegisterForm({ signinBtnHandler, signup }) {
+export default function RegisterForm({ signinBtnHandler, signup, setAccessToken }) {
   const [firstName, setFirstName] = useState("");
   const [validFirstName, setValidFirstName] = useState(false);
 
@@ -29,6 +29,7 @@ export default function RegisterForm({ signinBtnHandler, signup }) {
   let disabled =
     validFirstName && validLastName && validEmail && validPwd && validMatch;
 
+    // Vlidation
   useEffect(() => {
     const result = NAME_REGEX.test(firstName);
     setValidFirstName(result);
@@ -77,6 +78,7 @@ export default function RegisterForm({ signinBtnHandler, signup }) {
         }
         const data = await response.json();
         console.log(data);
+        setAccessToken(data.accessToken)
         setFirstName('');
         setLastName('');
         setEmail('');
@@ -175,12 +177,10 @@ export default function RegisterForm({ signinBtnHandler, signup }) {
 
 
 
-const USER = {
-    firstName: "Jane",
-    lastName: "Doe",
-    email: "jane@mail.com",
-    password: "!123Jane"
-}
+// const USER = {
+//     firstName: "Jane",
+//     lastName: "Doe",
+//     email: "jane@mail.com",
+//     password: "!123Jane"
+// }
 
-const TOKEN = {accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJmNGY5MDZjZC05ZGRmLTQyYjUtODYxYi0yYzU5YmNmM2E5YTAiLCJzdWIiOiJqYW5lQG1haWwuY29tIiwiaWF0IjoxNjk1OTgxOTMxLjYxNywiZXhwIjoxNjk1OTg1NTMxLjYxNywicm9sZXMiOlsidXNlciJdLCJvcmlnaW5hbF91aWQiOiJmNGY5MDZjZC05ZGRmLTQyYjUtODYxYi0yYzU5YmNmM2E5YTAifQ.T-9uoshfTVpC3pJ-O2e6uTvAtbbSvYjjpum4EzD1ec0", 
-refreshToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJmNGY5MDZjZC05ZGRmLTQyYjUtODYxYi0yYzU5YmNmM2E5YTAiLCJzdWIiOiJqYW5lQG1haWwuY29tIiwiaWF0IjoxNjk1OTgxOTMxLjYxNywiZXhwIjoxNjk2NTg2NzMxLjYxNywicm9sZXMiOlsidXNlciJdLCJvcmlnaW5hbF91aWQiOiJmNGY5MDZjZC05ZGRmLTQyYjUtODYxYi0yYzU5YmNmM2E5YTAifQ.pstuxZQSx4UdCN0kT1GEbUgh_gS-gbiNiMm-uls7S-A"}
